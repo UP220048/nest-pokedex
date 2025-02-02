@@ -1,0 +1,19 @@
+html, body {
+    margin: 0;
+    padding: 0;  /* Eliminamos el padding en body para que el fondo cubra toda la pantalla */
+    background: firebrick;
+    height: 100%;  /* Aseguramos que el fondo cubra toda la altura */
+    box-sizing: border-box; /* Esto asegura que el padding no afecte el tamaño */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Aseguramos que el fondo cubra toda la altura de la ventana */
+}
+
+h1 {
+    font-size: 20px;
+    color: white;
+    padding: 20px;  /* Solo el padding en el h1 */
+}
