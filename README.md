@@ -24,6 +24,25 @@
     docker-compose up -d
     ```
 
+5. Reconstruir la base de datos con la semilla:
+
+    ```bash
+    http://localhost:3000/api/v2/seed
+    ```
+
+6. Clonar el archivo __.env.template__ y renombrar la copia a __.env__
+
+7. Ejecutar la aplicacion en dev:
+```bash
+    yarn start:dev
+    ```
+
+8. Reconstruit la base de datos con la semilla
+
+```bash
+    http://localhost:3000/api/v2/seed
+    ```
+
 
 ## Stack usado
 *MongoDB

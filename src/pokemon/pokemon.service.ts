@@ -5,14 +5,22 @@ import { isValidObjectId, Model } from 'mongoose';
 import { Pokemon } from './entities/pokemon.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { arrayUnique } from 'class-validator';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class PokemonService {
 
+  private defaultLimit: number;
   constructor(
+    
     @InjectModel(Pokemon.name)
-    private readonly pokemonModel: Model<Pokemon>
-  ) {}
+    private readonly pokemonModel: Model<Pokemon>,
+    private readonly configService: ConfigService,
+
+  ) {
+    this.defaultLimit = this.configService.get<number>('defaultLimit');
+  }
 
 
 
@@ -30,9 +38,18 @@ export class PokemonService {
     
   }
 
-  findAll() {
-    return `This action returns all pokemon`;
-  }
+  findAll(paginationDto: PaginationDto) {
+
+    const {limit = +process.env.DEFAULT_LIMIT, offset = 0 } = paginationDto;
+
+    return this.pokemonModel.find()
+      .limit(limit)
+      .skip(offset) 
+      .sort({
+        no: 1
+      });
+
+    }
 
   async findOne(term: string) {
 
@@ -99,10 +116,17 @@ export class PokemonService {
     throw new InternalServerErrorException('Error creating pokemon');
   }
 
+  async removeAll(): Promise<void> {
+    await this.pokemonModel.deleteMany({});
+  }
 
 
 }
 function injectModel(target: typeof PokemonService, propertyKey: undefined, parameterIndex: 0): void {
+  throw new Error('Function not implemented.');
+}
+
+function limit(arg0: number) {
   throw new Error('Function not implemented.');
 }
 
